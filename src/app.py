@@ -1,6 +1,7 @@
 from dash import Dash, html, dcc, Input, Output, State
 import plotly.express as px
 import pandas as pd
+import dash_html_components as html
 
 # Data: https://www.dallasopendata.com/Services/Animals-Inventory/qgg6-h4bd
 df = pd.read_csv("https://raw.githubusercontent.com/Coding-with-Adam/Dash-by-Plotly/master/Analytic_Web_Apps/Excel_to_Dash_Animal_Shelter/Animals_Inventory.csv")
@@ -11,8 +12,35 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = Dash(__name__, external_stylesheets=external_stylesheets)
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
+app.index_string = """<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-TMWTX6KF7L"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
+        gtag('config', 'G-TMWTX6KF7L');
+        </script>
+        {%metas%}
+        <title>{%title%}</title>
+        {%favicon%}
+        {%css%}
+    </head>
+    <body>
+        {%app_entry%}
+        <footer>
+            {%config%}
+            {%scripts%}
+            {%renderer%}
+        </footer>
+    </body>
+</html>"""
 app.layout = html.Div([
+        
+    
     html.H1("Analytics Dashboard of Dallas Animal Shelter (Dash Plotly)", style={"textAlign":"center"}),
     html.Hr(),
     html.P("Choose animal of interest:"),
@@ -24,6 +52,7 @@ app.layout = html.Div([
     ],className="two columns"),className="row"),
 
     html.Div(id="output-div", children=[]),
+
 ])
 
 
@@ -73,4 +102,4 @@ def make_graphs(animal_chosen):
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=False,port=440)
