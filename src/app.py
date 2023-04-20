@@ -1,7 +1,7 @@
 from dash import Dash, html, dcc, Input, Output, State
 import plotly.express as px
 import pandas as pd
-import dash_html_components as html
+
 
 # Data: https://www.dallasopendata.com/Services/Animals-Inventory/qgg6-h4bd
 df = pd.read_csv("https://raw.githubusercontent.com/Coding-with-Adam/Dash-by-Plotly/master/Analytic_Web_Apps/Excel_to_Dash_Animal_Shelter/Animals_Inventory.csv")
